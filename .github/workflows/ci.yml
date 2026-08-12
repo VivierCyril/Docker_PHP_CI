@@ -55,6 +55,7 @@ jobs:
     deploy:
         name: Déploiement (GitHub Pages)
         runs-on: ubuntu-latest
+        needs: test
         # Ne se déclenche que sur la branche solution
         if: github.ref == 'refs/heads/solution' && github.event_name == 'push'
 
