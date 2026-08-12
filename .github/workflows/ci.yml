@@ -3,6 +3,9 @@
 name: Deploy to GitHub
 run-name: Deploy branch "${{ github.ref_name }}"
 
+permissions: 
+    contents: read
+
 on:
     push:
         # Liste des branches qui déclencheront l'action de déploiement lors d'un git push
@@ -37,4 +40,4 @@ jobs:
                 composer validate --strict
                 composer install --optimize-autoloader --no-interaction --prefer-dist
             - name: Test
-              run: make test
+              run: php ./vendor/bin/phpunit tests
