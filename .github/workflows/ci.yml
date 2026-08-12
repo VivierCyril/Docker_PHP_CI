@@ -21,14 +21,14 @@ env:
 
 jobs:
     test:
-        runs-on: ubuntu_latest
+        runs-on: ubuntu-latest
         concurrency:
             group: test-my-project-${{ github.workflow }}-${{ github.ref }}
             cancel-in-progress: true
     
         steps:
             - name: Checkout project
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: Initialize PHP ${{ env.php_version }}
               uses: shivammathur/setup-php@v2
