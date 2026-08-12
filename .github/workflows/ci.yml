@@ -17,11 +17,11 @@ on:
         branches: [dev]
 
 env:
-    php_version: 8.3
+    php_version: 8.5
 
 jobs:
     test:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-26.04
         concurrency:
             group: test-my-project-${{ github.workflow }}-${{ github.ref }}
             cancel-in-progress: true
