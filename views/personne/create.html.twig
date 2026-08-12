@@ -1,0 +1,35 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+<h1>{{ title }}</h1>
+<form action="{{ url('personne_store') }}" method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <div class="mb-3">
+        <label for="iLastname" class="form-label">Lastname</label>
+        <input type="text" class="form-control" name="lastname" id="iLastname" placeholder="lastname" required>
+    </div>
+    <div class="mb-3">
+        <label for="iFirstname" class="form-label">Firstname</label>
+        <input type="text" class="form-control" name="firstname" id="iFirstname" placeholder="firstname" required>
+    </div>
+    <div class="mb-3">
+        <label for="iEmail" class="form-label">Email</label>
+        <input type="email" class="form-control" name="email" id="iEmail" placeholder="jhon@doe.fr" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="sGender" class="form-label">Gender</label>
+        <select class="form-select" name="gender" id="gender" aria-label="Default select example">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+    </div>
+
+    <div class="d-grid gap-2 d-md-block">
+        <button type="submit" class="btn btn-primary">Créer</button>
+        <a href="{{ url('personne_index') }}" class="btn btn-success">Retour à la liste</a>
+    </div>
+</form>
+{% endblock %}

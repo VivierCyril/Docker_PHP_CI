@@ -1,0 +1,12 @@
+parameters:
+    # treatPhpDocTypesAsCertain: false
+    paths:
+        - config
+        - public
+        - tests
+    level: 5
+    # ignoreErrors:
+    #     - '#PHPDoc tag @var#'
+    #     - identifier: function.alreadyNarrowedType
+    #     - identifier: instanceof.alwaysTrue
+    #     - identifier: nullsafe.neverNull

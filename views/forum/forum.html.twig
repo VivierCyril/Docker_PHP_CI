@@ -1,0 +1,29 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+<main class="container">
+    <h1>Forum</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>#</td>
+                <td>Name</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for personne in personnes %}
+                <tr>
+                    <td>{{ personne.id }}</td>
+                    <td>{{ personne.majuscule }}</td> 
+                </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+    
+</main>
+{% endblock %}

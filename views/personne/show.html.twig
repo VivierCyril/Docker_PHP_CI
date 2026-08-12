@@ -1,0 +1,12 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+<h1>{{ title }}</h1>
+<p>ID: {{ personne.id }}</p>
+<p>Nom: {{ personne.lastname }}</p>
+<p>Majuscule: {{ personne.majuscule() }}</p>
+<a href="{{ url('personne_index') }}" class="btn btn-success">Retour à la liste</a>
+<a href="{{ url('personne_edit', {'id': personne.ID_personne}) }}" class="btn btn-secondary">Éditer</a>
+{% endblock %}

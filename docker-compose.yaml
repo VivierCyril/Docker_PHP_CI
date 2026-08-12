@@ -1,0 +1,52 @@
+services:
+    php:
+        image: docker-php-app:8.4.24-apache
+        container_name: php8424
+        ports:
+          - 8000:80
+        volumes:
+          - ./:/var/www/html
+        build:
+            context: .
+            dockerfile: config/Dockerfile
+    db:
+        image: mysql:latest
+        container_name: mysqllast
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        ports:
+            - 3360:3306
+        restart: always
+        volumes:
+            - db_data:/var/lib/mysql          # Volume existant
+            - ./backups:/backups               # Nouveau : dossier local
+    phpma:
+        image: phpmyadmin
+        container_name: phpmyadmin
+        restart: always
+        ports:
+          - 9000:80
+        environment:
+            PMA_ARBITRARY: ${PMA_ARBITRARY}
+            PMA_HOST: ${PMA_HOST}
+            PMA_USER: ${PMA_USER}
+            PMA_PASSWORD: ${PMA_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            UPLOAD_LIMIT: ${UPLOAD_LIMIT}
+
+    # phpunit:
+    #     container_name: phpunit
+    #     image: jitesoft/phpunit:8.2
+    #     environment:
+    #     - "XDEBUG_MODE=debug"
+    #     volumes:
+    #     - "./php:/app/"
+    #     - "./conf/phpunit/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
+    #     - "./conf/phpunit/xdebug.log:/var/log/xdebug.log"
+
+
+volumes:
+  db_data:

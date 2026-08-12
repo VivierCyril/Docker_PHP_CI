@@ -1,0 +1,23 @@
+{
+    "name": "cyril/docker-php",
+    "authors": [
+        {
+            "name": "Vivier Cyril",
+            "email": "vivier.cyril2@afpa.fr"
+        }
+    ],
+    "require": {
+        "symfony/var-dumper": "^8.1",
+        "altorouter/altorouter": "^2.0",
+        "twig/twig": "^3.28"
+    },
+    "autoload": {
+        "psr-4": {
+            "AFPA\\": "src/"
+        }
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^2.2",
+        "phpunit/phpunit": "^13"
+    }
+}
