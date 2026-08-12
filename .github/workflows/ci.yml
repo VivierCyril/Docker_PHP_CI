@@ -51,3 +51,26 @@ jobs:
                 
             - name: Test
               run: php ./vendor/bin/phpunit tests
+  # 3. Déploiement
+    deploy:
+        name: Déploiement (GitHub Pages)
+        runs-on: ubuntu-latest
+        # Ne se déclenche que sur la branche solution
+        if: github.ref == 'refs/heads/solution' && github.event_name == 'push'
+
+        permissions:
+            contents: read
+            pages: write
+            id-token: write
+
+        environment:
+            name: github-pages
+            url: ${{ steps.deployment.outputs.page_url }}
+        
+        steps:
+          - name: Setup GitHub Pages
+            uses: actions/configure-pages@v6
+
+          - name: Déploiement sur GitHub Pages
+            id: deployment
+            uses: actions/deploy-pages@v5
