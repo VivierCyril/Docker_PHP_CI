@@ -17,7 +17,7 @@ on:
         branches: [dev]
 
 env:
-    php_version: 8.4
+    php_version: 8.3
 
 jobs:
     test:
@@ -35,9 +35,17 @@ jobs:
               with:
                 php-version: ${{ env.php_version }}
                 coverage: pcov
+
+            - name: Setup PHP with composer v2
+              uses: shivammathur/setup-php@v2
+              with:
+                php-version: ${{ env.php_version }}
+                tools: composer:v2
+
             - name: Composer install
               run: |
                 composer validate --strict
                 composer install --optimize-autoloader --no-interaction --prefer-dist
+                
             - name: Test
               run: php ./vendor/bin/phpunit tests
