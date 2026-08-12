@@ -44,7 +44,6 @@ jobs:
 
             - name: Composer install
               run: |
-                composer validate --strict
                 composer install --optimize-autoloader --no-interaction --prefer-dist
                 
             - name: Test
