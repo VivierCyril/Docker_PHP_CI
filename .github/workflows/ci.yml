@@ -36,6 +36,9 @@ jobs:
                 php-version: ${{ env.php_version }}
                 coverage: pcov
 
+            - name: Print PHP version
+              run: echo ${{ steps.initialize-php.outputs.php-version }}
+
             - name: Setup PHP with composer v2
               uses: shivammathur/setup-php@v2
               with:
