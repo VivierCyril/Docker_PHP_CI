@@ -4,19 +4,37 @@ name: Deploy to GitHub
 run-name: Deploy branch "${{ github.ref_name }}"
 
 on:
-  push:
-    # Liste des branches qui déclencheront l'action de déploiement lors d'un git push
-    # N'oubliez pas de créer un environnement correspondant dans GitHub (dans "Settings" -> "Environments") pour chaque branche
-    # Puis ajoutez le secret "STACKHERO_SSH_PRIVATE_KEY" et la variable "STACKHERO_ENDPOINT" dans cet environnement
-    branches: [ "dev" ]
+    push:
+        # Liste des branches qui déclencheront l'action de déploiement lors d'un git push
+        # N'oubliez pas de créer un environnement correspondant dans GitHub (dans "Settings" -> "Environments") pour chaque branche
+        # Puis ajoutez le secret "STACKHERO_SSH_PRIVATE_KEY" et la variable "STACKHERO_ENDPOINT" dans cet environnement
+        branches: [dev]
+
+    pull_request:
+        branches: [dev]
+
+env:
+    php_version: 8.4
 
 jobs:
-  Deploy:
-    environment: ${{ github.ref_name }}
-    runs-on: ubuntu-latest
-    steps:
-    - uses: stackhero-io/github-actions-deploy-to-stackhero@v1
-      with:
-        # Le secret "STACKHERO_SSH_PRIVATE_KEY" et la variable "STACKHERO_ENDPOINT" doivent être définis dans l'environnement GitHub correspondant (dans "Settings" -> "Environments")
-        ssh_private_key: ${{ secrets.STACKHERO_SSH_PRIVATE_KEY }}
-        endpoint: ${{ vars.STACKHERO_ENDPOINT }}
+    test:
+        runs-on: ubuntu_latest
+        concurrency:
+            group: test-my-project-${{ github.workflow }}-${{ github.ref }}
+            cancel-in-progress: true
+    
+        steps:
+            - name: Checkout project
+              uses: actions/checkout@v3
+
+            - name: Initialize PHP ${{ env.php_version }}
+              uses: shivammathur/setup-php@v2
+              with:
+                php-version: ${{ env.php_version }}
+                coverage: pcov
+            - name: Composer install
+              run: |
+                composer validate --strict
+                composer install --optimize-autoloader --no-interaction --prefer-dist
+            - name: Test
+              run: make test
